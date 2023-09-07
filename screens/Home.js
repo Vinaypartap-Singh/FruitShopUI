@@ -1,4 +1,6 @@
 import {
+  Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -12,12 +14,25 @@ import {
   ShoppingCartIcon,
 } from "react-native-heroicons/mini";
 import { theme } from "../theme/theme";
-import { categories } from "../contants";
+import { categories, featuredFruits } from "../contants";
+import { StatusBar } from "expo-status-bar";
+import { NativeModules } from "react-native";
+import FruitCard from "../components/FruitCard";
+import FruitSalesCard from "../components/FruitSalesCard";
 
 export default function Home() {
+  const { StatusBarManager } = NativeModules;
   const [activeCategory, setActiveCategory] = useState("Oranges");
   return (
-    <View style={{ paddingHorizontal: 30 }}>
+    <ScrollView
+      style={{
+        paddingHorizontal: 30,
+        marginTop:
+          Platform.OS === "android"
+            ? StatusBarManager.HEIGHT
+            : StatusBar.currentHeight,
+      }}
+    >
       <SafeAreaView>
         <View
           style={{
@@ -28,7 +43,7 @@ export default function Home() {
           }}
         >
           <Bars3CenterLeftIcon size={30} color={"black"} />
-          <View
+          <TouchableOpacity
             style={{
               backgroundColor: theme.cartButton,
               padding: 10,
@@ -36,7 +51,7 @@ export default function Home() {
             }}
           >
             <ShoppingCartIcon size={30} color={"orange"} />
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 25 }}>Seasonal</Text>
@@ -80,7 +95,24 @@ export default function Home() {
           })}
         </ScrollView>
       </View>
-    </View>
+      {/* Fruit Card */}
+      <View style={{ marginTop: 20 }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {featuredFruits.map((data) => {
+            return <FruitCard data={data} key={data.name} />;
+          })}
+        </ScrollView>
+      </View>
+      {/* Hot Sales */}
+      <View style={{ marginTop: 20 }}>
+        <Text style={{ fontWeight: "bold", fontSize: 20 }}>Hot Sales</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {[...featuredFruits].reverse().map((data) => (
+            <FruitSalesCard key={data.name} data={data} />
+          ))}
+        </ScrollView>
+      </View>
+    </ScrollView>
   );
 }
 

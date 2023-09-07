@@ -84,13 +84,4 @@ export const cartItems = [
     image: require("../assets/images/grapes.png"),
     color: (opacity) => `rgba(214, 195, 246, ${opacity})`,
   },
-  {
-    name: "Green Apple",
-    price: "10.5",
-    qty: 2,
-    desc: "Sweet and juicy",
-    shadow: "green",
-    image: require("../assets/images/greenApple.png"),
-    color: (opacity) => `rgba(139, 243, 139, ${opacity})`,
-  },
 ];

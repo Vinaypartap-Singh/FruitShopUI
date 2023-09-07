@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./screens/Home";
+import ProductPage from "./components/ProductPage";
+import Cart from "./screens/Cart";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +15,16 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Product"
+          component={ProductPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Cart"
+          component={Cart}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
